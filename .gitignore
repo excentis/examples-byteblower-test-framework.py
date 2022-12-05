@@ -1,0 +1,14 @@
+# Runtime-specific files
+/env/
+# Runtime-generated files
+__pycache__
+# Test-specific files
+.pytest_cache/
+# Build-specific files
+/build/
+/dist/
+*.egg-info/
+# IDE-specific files
+.vscode/
+# Script output
+reports/
