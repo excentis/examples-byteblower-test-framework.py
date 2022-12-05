@@ -13,46 +13,56 @@ Please feel free to look around and grasp for your needs!
 Usage
 =====
 
-#. Install Python (>= 3.7)
-#. Create and initialize local Python virtual environment
+Python
+------
+
+The ByteBlower Test Framework currently supports Python version >= 3.7
+and < 3.10 (due to incompatibility with one of its dependent packages).
+
+
+Python virtual environment
+--------------------------
+
+Using Python ``venv`` (*included in Python >= 3.3*):
+
+Prepare Python virtual environment: Create the virtual environment and install/update ``pip`` and ``build``.
+
+.. note::
+   _Mind the ``.`` which means **sourcing** ``./env/bin/activate``._
+
+.. code-block:: console
+
+   python3 -m venv --clear env
+   . ./env/bin/activate
+   pip install -U pip build
+
+Install the ByteBlower Test Framework and its dependencies
+
+.. code-block:: console
+
+   . ./env/bin/activate
+   pip install byteblower-test-framework
+
+Run the test
+------------
+
+#. Go to the example subdirectory directory
 
    .. code-block:: console
 
-      python3 -m venv --clear env
+      cd <example-subdir>
 
-      . ./env/bin/activate
-
-#. Update ``pip`` and ``build`` tools
+#. Make reports output directory
 
    .. code-block:: console
 
-      pip install -U pip build
+      mkdir reports
 
-#. Install dependencies
+#. Run the test script
 
    .. code-block:: console
 
-      pip install byteblower-test-framework
-
-#. Run the test
-
-   #. Go to the example subdirectory directory
-
-      .. code-block:: console
-
-         cd <example-subdir>
-
-   #. Make reports output directory
-
-      .. code-block:: console
-
-         mkdir reports
-
-   #. Run the test script
-
-      .. code-block:: console
-
-         python <example_test>.py
+      python <example_test>.py
 
 Development
 ===========
