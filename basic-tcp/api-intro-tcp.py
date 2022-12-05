@@ -123,14 +123,14 @@ def main() -> None:
     scenario.add_flow(us_tcp_flow)
     logging.info('Created upstream TCP flow %s', us_tcp_flow)
 
-    # 5. Run the traffic test
+    # 4. Run the traffic test
 
     # Run the scenario (for 10 seconds)
     # Using the same duration as both flows also run for 10 seconds.
     logging.info('Start scenario')
     scenario.run(duration=timedelta(seconds=12))
 
-    # 6. Generate test report
+    # 5. Generate test report
 
     logging.info('Generating report')
     scenario.report()

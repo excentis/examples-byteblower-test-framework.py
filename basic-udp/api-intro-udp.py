@@ -134,14 +134,14 @@ def main() -> None:
     scenario.add_flow(us_udp_flow)
     logging.info('Created upstream UDP flow %s', us_udp_flow)
 
-    # 5. Run the traffic test
+    # 4. Run the traffic test
 
     # Run the scenario (for 10 seconds)
     # Using the same duration as both flows also run for 10 seconds.
     logging.info('Start scenario')
     scenario.run(duration=timedelta(seconds=10))
 
-    # 6. Generate test report
+    # 5. Generate test report
 
     logging.info('Generating report')
     scenario.report()
