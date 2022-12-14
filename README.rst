@@ -28,7 +28,7 @@ Using Python ``venv`` (*included in Python >= 3.3*):
 Prepare Python virtual environment: Create the virtual environment and install/update ``pip`` and ``build``.
 
 .. note::
-   _Mind the ``.`` which means **sourcing** ``./env/bin/activate``._
+   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
 
 .. code-block:: console
 
