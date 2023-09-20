@@ -4,7 +4,6 @@ from datetime import timedelta
 from os import getcwd
 from os.path import join
 
-from byteblower_test_framework import Scenario  # Scenario
 from byteblower_test_framework.analysis import HttpAnalyser  # Flow analysis
 from byteblower_test_framework.endpoint import (  # Traffic endpoint interfaces
     IPv4Port,
@@ -18,6 +17,7 @@ from byteblower_test_framework.report import (  # Reporting
     ByteBlowerJsonReport,
     ByteBlowerUnitTestReport,
 )
+from byteblower_test_framework.run import Scenario  # Scenario
 from byteblower_test_framework.traffic import HTTPFlow  # Traffic generation
 
 # ByteBlower Server connection parameters
@@ -125,10 +125,11 @@ def main() -> None:
 
     # 4. Run the traffic test
 
-    # Run the scenario (for 10 seconds)
-    # Using the same duration as both flows also run for 10 seconds.
+    # Run the scenario
+    # The scenario will run for 10 seconds since we have a limited
+    # number of frames configured in the FrameBlastingFlows.
     logging.info('Start scenario')
-    scenario.run(duration=timedelta(seconds=12))
+    scenario.run()
 
     # 5. Generate test report
 

@@ -4,7 +4,6 @@ from datetime import timedelta
 from os import getcwd
 from os.path import join
 
-from byteblower_test_framework import Scenario  # Scenario
 from byteblower_test_framework.analysis import (  # Flow analysis
     HttpAnalyser,
     VoiceAnalyser,
@@ -21,6 +20,7 @@ from byteblower_test_framework.report import (  # Reporting
     ByteBlowerJsonReport,
     ByteBlowerUnitTestReport,
 )
+from byteblower_test_framework.run import Scenario  # Scenario
 from byteblower_test_framework.traffic import (  # Traffic generation
     HTTPFlow,
     VoiceFlow,
@@ -165,10 +165,11 @@ def main() -> None:
 
     # 5. Run the traffic test
 
-    # Run the scenario (for 10 seconds)
-    # Using the same duration as both flows also run for 10 seconds.
+    # Run the scenario (for 12 seconds)
+    # The flows will stop after 10s, leaving some additional time for
+    # processing the last (delayed?) incoming packets.
     logging.info('Start scenario')
-    scenario.run(duration=timedelta(seconds=12))
+    scenario.run(maximum_run_time=timedelta(seconds=12))
 
     # 6. Generate test report
 
