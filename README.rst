@@ -113,7 +113,8 @@ Create and initialize local Python virtual environment
       . ./env/bin/activate
       pip install -U pip build
 
-   Install the ByteBlower Test Framework and its dependencies
+   Install the ByteBlower Test Framework and its dependencies,
+   including development requirements.
 
    .. code-block:: shell
 
