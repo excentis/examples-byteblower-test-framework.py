@@ -22,25 +22,56 @@ The ByteBlower Test Framework currently supports Python version 3.7 up to 3.10.
 Python virtual environment
 --------------------------
 
-Using Python ``venv`` (*included in Python >= 3.3*):
+1. On Unix-based systems (Linux, WSL, macOS):
 
-Prepare Python virtual environment: Create the virtual environment and install/update ``pip`` and ``build``.
+   Prepare Python virtual environment: Create the virtual environment
+   and install/update ``pip`` and ``build``.
 
-.. note::
-   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+   .. note::
+      *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
 
-.. code-block:: shell
+   .. code-block:: shell
 
-   python3 -m venv --clear env
-   . ./env/bin/activate
-   pip install -U pip build
+      python3 -m venv --clear env
+      . ./env/bin/activate
+      pip install -U pip build
 
-Install the ByteBlower Test Framework and its dependencies
+   Install the ByteBlower Test Framework and its dependencies
 
-.. code-block:: console
+   .. code-block:: shell
 
-   . ./env/bin/activate
-   pip install byteblower-test-framework
+      . ./env/bin/activate
+      pip install byteblower-test-framework
+
+2. On Windows systems using PowerShell:
+
+      **Note**: On Microsoft Windows, it may be required to enable the
+      Activate.ps1 script by setting the execution policy for the user.
+      You can do this by issuing the following PowerShell command:
+
+      .. code-block:: shell
+
+         PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+      See `About Execution Policies`_ for more information.
+
+   Prepare Python virtual environment: Create the virtual environment
+   and install/update ``pip`` and ``build``.
+
+   .. code-block:: shell
+
+      python3.8.exe -m venv --clear env
+      & ".\env\Scripts\activate.ps1"
+      pip install -U pip build
+
+   Install the ByteBlower Test Framework and its dependencies
+
+   .. code-block:: shell
+
+      & ".\env\Scripts\activate.ps1"
+      pip install byteblower-test-framework
+
+.. _About Execution Policies: https://go.microsoft.com/fwlink/?LinkID=135170
 
 Run the test
 ------------
@@ -68,10 +99,50 @@ Development
 
 Create and initialize local Python virtual environment
 
-.. code-block:: shell
+1. On Unix-based systems (Linux, WSL, macOS):
 
-   python3 -m venv --clear env
-   . ./env/bin/activate
-   pip install -U pip build
+   Prepare Python virtual environment: Create the virtual environment
+   and install/update ``pip`` and ``build``.
 
-   pip install byteblower-test-framework[dev,test,docs-dev]
+   .. note::
+      *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+
+   .. code-block:: shell
+
+      python3 -m venv --clear env
+      . ./env/bin/activate
+      pip install -U pip build
+
+   Install the ByteBlower Test Framework and its dependencies
+
+   .. code-block:: shell
+
+      pip install byteblower-test-framework[dev,test,docs-dev]
+
+2. On Windows systems using PowerShell:
+
+   Prepare Python virtual environment: Create the virtual environment
+   and install/update ``pip`` and ``build``.
+
+      **Note**: On Microsoft Windows, it may be required to enable the
+      Activate.ps1 script by setting the execution policy for the user.
+      You can do this by issuing the following PowerShell command:
+
+      .. code-block:: shell
+
+         PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+      See `About Execution Policies`_ for more information.
+
+   .. code-block:: shell
+
+      python3.8.exe -m venv --clear env
+      & ".\env\Scripts\activate.ps1"
+      pip install -U pip build
+
+   Install the ByteBlower Test Framework and its dependencies,
+   including development requirements.
+
+   .. code-block:: shell
+
+      pip install byteblower-test-framework[dev,test,docs-dev]
