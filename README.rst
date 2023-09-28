@@ -62,7 +62,7 @@ Python virtual environment
 
       python3.8.exe -m venv --clear env
       & ".\env\Scripts\activate.ps1"
-      pip install -U pip build
+      python3.8.exe -m pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies
 
@@ -139,7 +139,7 @@ Create and initialize local Python virtual environment
 
       python3.8.exe -m venv --clear env
       & ".\env\Scripts\activate.ps1"
-      pip install -U pip build
+      python3.8.exe -m pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies,
    including development requirements.
