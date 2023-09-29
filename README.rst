@@ -27,8 +27,8 @@ Python virtual environment
    Prepare Python virtual environment: Create the virtual environment
    and install/update ``pip`` and ``build``.
 
-   .. note::
-      *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+   **Note**:
+   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
 
    .. code-block:: shell
 
@@ -104,8 +104,8 @@ Create and initialize local Python virtual environment
    Prepare Python virtual environment: Create the virtual environment
    and install/update ``pip`` and ``build``.
 
-   .. note::
-      *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+   **Note**:
+   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
 
    .. code-block:: shell
 
