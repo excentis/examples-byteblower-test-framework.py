@@ -17,7 +17,7 @@ Usage
 Python requirements
 -------------------
 
-The ByteBlower Test Framework currently supports Python version 3.7 up to 3.10.
+The ByteBlower Test Framework currently supports Python version 3.7 up to 3.11.
 
 Python virtual environment
 --------------------------
