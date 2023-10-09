@@ -129,7 +129,7 @@ def main() -> None:
 
     # Downstream TCP flow
 
-    # Create a TCP Stream of 10s @ 15MBps
+    # Create a TCP Stream of 10s
     ds_tcp_flow = HTTPFlow(
         wan_port,
         cpe_port,
@@ -147,7 +147,7 @@ def main() -> None:
 
     # Upstream TCP flow
 
-    # Create a TCP Stream of 10s @ 15MBps
+    # Create a TCP Stream of 10s
     us_tcp_flow = HTTPFlow(
         cpe_port,
         wan_port,
