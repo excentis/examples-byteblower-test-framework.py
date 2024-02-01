@@ -1,4 +1,4 @@
-"""Introduction to the ByteBlower Test Framework API."""
+"""Introduction to the IPv6 Endpoint API."""
 import logging  # Use the Python default logging interface
 from datetime import timedelta
 from os import getcwd
@@ -6,10 +6,11 @@ from os.path import join
 
 from byteblower_test_framework.analysis import HttpAnalyser  # Flow analysis
 from byteblower_test_framework.endpoint import (  # Traffic endpoint interfaces
-    IPv4Port,
-    NatDiscoveryIPv4Port,
+    IPv6Endpoint,
+    IPv6Port,
 )
-from byteblower_test_framework.host import Server  # Host interfaces
+from byteblower_test_framework.host import MeetingPoint  # Host interfaces
+from byteblower_test_framework.host import Server
 from byteblower_test_framework.logging import \
     configure_logging  # Helper function
 from byteblower_test_framework.report import (  # Reporting
@@ -21,22 +22,23 @@ from byteblower_test_framework.run import Scenario  # Scenario
 from byteblower_test_framework.traffic import HTTPFlow  # Traffic generation
 
 # ByteBlower Server connection parameters
-_SERVER = 'byteblower-tutorial-3100.lab.byteblower.excentis.com.'
+_SERVER = 'byteblower-integration-3100-1.lab.byteblower.excentis.com.'
+
+# ByteBlower Meeting Point connection parameters
+_MEETING_POINT = 'byteblower-integration-3100-1.lab.byteblower.excentis.com.'
 
 # ByteBlower Port parameters
-_WAN_INTERFACE = 'trunk-1-5'
-_CPE_INTERFACE = 'trunk-1-4'
+_WAN_INTERFACE = "trunk-1-23"
 
-# ByteBlower Port Layer 3 addressing parameters
-# Manual IPv4 configuration:
-_WAN_IPv4 = '10.8.128.61'
-_WAN_NETMASK = '255.255.255.0'
-_WAN_GATEWAY = '10.8.128.1'
+# IPv6 Stateless Auto-configuration
+_WAN_IPv6 = "slaac"
 
-_CPE_IPv4 = 'dhcp'
+# ByteBlower Port parameters
+# Unique Identifier (UUID) of the ByteBlower Endpoint application
+_UUID: str = '017d7da0-9724-4459-a037-bcec9acf577a'
 
 # The generated reports will be stored to the 'reports' subdirectory.
-_REPORT_PATH = join(getcwd(), 'reports')
+_REPORT_PATH = join(getcwd(), "reports")
 
 
 def main() -> None:
@@ -52,61 +54,62 @@ def main() -> None:
         output_dir=_REPORT_PATH
     )
     scenario.add_report(byteblower_unittest_report)
-    # Generate a JSON summary report
-    byteblower_summary_report = ByteBlowerJsonReport(output_dir=_REPORT_PATH)
-    scenario.add_report(byteblower_summary_report)
+    # Generate a JSON report
+    byteblower_json_report = ByteBlowerJsonReport(output_dir=_REPORT_PATH)
+    scenario.add_report(byteblower_json_report)
 
-    # 2. Connect to the ByteBlower server and create & initialize ports
+    # 2. Connect to the ByteBlower hosts and create & initialize endpoints
 
     # Connect to the ByteBlower Server
     server = Server(_SERVER)
-    logging.info('Connected to ByteBlower Server %s', server.info)
+    logging.info("Connected to ByteBlower Server %s", server.info)
+
+    # Connect to the ByteBlower Meeting Point
+    meeting_point = MeetingPoint(_MEETING_POINT)
+    logging.info(
+        "Connected to ByteBlower meeting point %s",
+        meeting_point.info,
+    )
 
     # Simulate a host at the WAN-side of the network
     # Create and initialize a ByteBlowerPort on the given interface
     # at the connected ByteBlowerServer
-    wan_port = IPv4Port(
+    wan_port = IPv6Port(
         server,
         interface=_WAN_INTERFACE,
-        ipv4=_WAN_IPv4,
-        netmask=_WAN_NETMASK,
-        gateway=_WAN_GATEWAY,
-        name='WAN'
+        ipv6=_WAN_IPv6,
+        name="WAN",
     )
     logging.info(
-        'Initialized WAN port %r'
-        ' with IP address %r, network %r', wan_port.name, wan_port.ip,
-        wan_port.network
+        "Initialized WAN port %r"
+        " with IP address %r, network %r",
+        wan_port.name,
+        wan_port.ip,
+        wan_port.network,
     )
 
     # Simulate a host at the CPE-side of the network
-    # Create and initialize a ByteBlowerPort on the given interface
-    # at the connected ByteBlowerServer
-    cpe_port = NatDiscoveryIPv4Port(
-        server,
-        interface=_CPE_INTERFACE,
-        ipv4=_CPE_IPv4,
-        name='CPE',
-    )
+    # Create and initialize a ByteBlowerEndpoint on the given device
+    # at the connected Meeting Point
+    cpe_endpoint = IPv6Endpoint(meeting_point, _UUID)
     logging.info(
-        'Initialized CPE port %r'
-        ' with IP address %r, network %r',
-        cpe_port.name,
-        cpe_port.ip,
-        cpe_port.network,
+        "Initialized CPE endpoint %r"
+        " with UUID %r",
+        cpe_endpoint.name,
+        cpe_endpoint.uuid,
     )
 
     # 3. Define the traffic test (flows)
 
     # Downstream TCP flow
 
-    # Create a TCP Stream of 10s @ 4MBps
+    # Create a TCP Stream of 10s @ 4Mbps
     ds_tcp_flow = HTTPFlow(
         wan_port,
-        cpe_port,
-        name='Downstream TCP flow',
+        cpe_endpoint,
+        name="Downstream TCP flow",
         request_duration=timedelta(seconds=10),
-        maximum_bitrate=32000000,
+        maximum_bitrate=4000000,
         receive_window_scaling=7,
     )
 
@@ -116,17 +119,17 @@ def main() -> None:
 
     # Add the downstream TCP flow to the scenario
     scenario.add_flow(ds_tcp_flow)
-    logging.info('Created downstream TCP flow %s', ds_tcp_flow)
+    logging.info("Created downstream TCP flow %r", ds_tcp_flow.name)
 
     # Upstream TCP flow
 
-    # Create a TCP Stream of 10s @ 4MBps
+    # Create a TCP Stream of 50MB @ 4Mbps
     us_tcp_flow = HTTPFlow(
-        cpe_port,
+        cpe_endpoint,
         wan_port,
-        name='Upstream TCP flow',
-        request_duration=timedelta(seconds=10),
-        maximum_bitrate=32000000,
+        name="Upstream TCP flow",
+        request_size=50000000,
+        maximum_bitrate=4000000,
         receive_window_scaling=7,
     )
 
@@ -136,23 +139,23 @@ def main() -> None:
 
     # Add the upstream TCP flow to the scenario
     scenario.add_flow(us_tcp_flow)
-    logging.info('Created upstream TCP flow %s', us_tcp_flow)
+    logging.info("Created upstream TCP flow %r", us_tcp_flow.name)
 
     # 4. Run the traffic test
 
     # Run the scenario
-    # The scenario will run for 10 seconds since we have a limited
-    # number of frames configured in the FrameBlastingFlows.
-    logging.info('Start scenario')
+    # The scenario will run for at least 10 seconds since
+    # we have an HTTPFlow with fixed duration of 10s.
+    logging.info("Start scenario")
     scenario.run()
 
     # 5. Generate test report
 
-    logging.info('Generating report')
+    logging.info("Generating report")
     scenario.report()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Initialize the Python logging for output to console
     logging.basicConfig(level=logging.INFO)
 

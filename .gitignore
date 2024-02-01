@@ -1,5 +1,6 @@
 # Runtime-specific files
 /env/
+/.venv/
 # Runtime-generated files
 __pycache__
 # Test-specific files
