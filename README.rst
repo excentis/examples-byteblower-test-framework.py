@@ -28,19 +28,19 @@ Python virtual environment
    and install/update ``pip`` and ``build``.
 
    **Note**:
-   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+   *Mind the leading* ``.`` *which means* **sourcing** ``./.venv/bin/activate``.
 
    .. code-block:: shell
 
-      python3 -m venv --clear env
-      . ./env/bin/activate
+      python3 -m venv --clear .venv
+      . ./.venv/bin/activate
       pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies
 
    .. code-block:: shell
 
-      . ./env/bin/activate
+      . ./.venv/bin/activate
       pip install byteblower-test-framework
 
 2. On Windows systems using PowerShell:
@@ -60,15 +60,15 @@ Python virtual environment
 
    .. code-block:: shell
 
-      python3.8.exe -m venv --clear env
-      & ".\env\Scripts\activate.ps1"
+      python3.8.exe -m venv --clear .venv
+      & ".\.venv\Scripts\activate.ps1"
       python3.8.exe -m pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies
 
    .. code-block:: shell
 
-      & ".\env\Scripts\activate.ps1"
+      & ".\.venv\Scripts\activate.ps1"
       pip install byteblower-test-framework
 
 .. _About Execution Policies: https://go.microsoft.com/fwlink/?LinkID=135170
@@ -105,12 +105,12 @@ Create and initialize local Python virtual environment
    and install/update ``pip`` and ``build``.
 
    **Note**:
-   *Mind the leading* ``.`` *which means* **sourcing** ``./env/bin/activate``.
+   *Mind the leading* ``.`` *which means* **sourcing** ``./.venv/bin/activate``.
 
    .. code-block:: shell
 
-      python3 -m venv --clear env
-      . ./env/bin/activate
+      python3 -m venv --clear .venv
+      . ./.venv/bin/activate
       pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies,
@@ -137,8 +137,8 @@ Create and initialize local Python virtual environment
 
    .. code-block:: shell
 
-      python3.8.exe -m venv --clear env
-      & ".\env\Scripts\activate.ps1"
+      python3.8.exe -m venv --clear .venv
+      & ".\.venv\Scripts\activate.ps1"
       python3.8.exe -m pip install -U pip build
 
    Install the ByteBlower Test Framework and its dependencies,
